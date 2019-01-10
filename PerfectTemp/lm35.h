@@ -14,6 +14,7 @@ class lm35
     float getTemp();
     float getPerfTemp();
     void resetPrefTemp();
+    float getTempF();
   
   private:
     int _pin;

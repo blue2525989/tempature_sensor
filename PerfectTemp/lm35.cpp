@@ -36,3 +36,11 @@ void lm35::decrease() {
 void lm35::resetPrefTemp() {
   _prefTemp = 72;
 }
+
+float lm35::getTempF() {
+   readTemp();
+   float val = getTemp();
+   float cel = (5.0 * val * 100.0)/1024.0;
+   float farh = ((cel*9)/5) + 32;
+   return farh;
+}

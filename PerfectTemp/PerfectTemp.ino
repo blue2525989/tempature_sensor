@@ -25,31 +25,29 @@ int main ()
     l->changeColor(0, 5, 0);
 
     while (true) {
-      checkCurrentState(warmerButton, perfButton, coolerButton, lm, l);
+      lm->readTemp();
+      float farh = lm->getTempF();
+      checkCurrentState(warmerButton, perfButton, coolerButton, lm);
+      checkCurrentTemp(farh, lm->getPerfTemp(), l);
+      Serial.println(farh);
     }
   } 
 
-void checkCurrentState(button* warmerButton, button* perfButton, button* coolerButton, lm35* lm35, led* led) {
+void checkCurrentState(button* warmerButton, button* perfButton, button* coolerButton, lm35* lm35) {
    if (warmerButton->checkState() == HIGH) {
     lm35->increase();
+    Serial.println(lm35->getPerfTemp());
    } else if (perfButton->checkState() == HIGH) {
     lm35->resetPrefTemp();
+    Serial.println(lm35->getPerfTemp());
    } else if (coolerButton->checkState() == HIGH) {
     lm35->decrease();
+    Serial.println(lm35->getPerfTemp());
    }
-
-
-   lm35->readTemp();
-   float val = lm35->getTemp();
-   float cel = (5.0 * val * 100.0)/1024.0;
-   float farh = ((cel*9)/5) + 32;
-   Serial.println(farh);
-   
-   checkCurrentTemp(farh, lm35->getPerfTemp(), led);
-   delay(250);
 }
 
 void checkCurrentTemp(float current, float perfect, led* led) {
+  //todo come up with a utility function to make wider range of colors based upon difference from prefTemp
   if (current > perfect) {
     led->changeColor(50, 0, 0);
   } else if (current < perfect) {
@@ -57,4 +55,5 @@ void checkCurrentTemp(float current, float perfect, led* led) {
   } else {
     led->changeColor(0, 50, 0);
   }
+  delay(1000);
 }
