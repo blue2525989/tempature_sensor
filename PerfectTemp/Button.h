@@ -9,6 +9,8 @@ class Button
   public:
   	Button(int pin);
   	bool checkState();
+    void setStateHigh();
+    void setStateLow();
   private:
   	int _pin;
   	bool _buttonState;

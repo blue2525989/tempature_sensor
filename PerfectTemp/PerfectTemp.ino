@@ -50,12 +50,12 @@ void checkCurrentTemp(float current, float perfect, Led* led) {
   float perfectMinus = perfect - 1.5;
   float perfectIncrease = perfect + 1.5;
   //todo come up with a utility function to make wider range of colors based upon difference from prefTemp
-  if (current > perfectMinus || current > perfectIncrease) {
-    led->changeColor(50, 0, 0);
+  if (current > perfectMinus && current < perfectIncrease) {
+    led->changeColor(0, 50, 0);
   } else if (current < perfectMinus || current < perfectIncrease) {
     led->changeColor(0, 0, 50);
-  } else {
-    led->changeColor(0, 50, 0);
+  } else if (current > perfectMinus || current > perfectIncrease) {
+    led->changeColor(50, 0, 0);
   }
   delay(1000);
 }

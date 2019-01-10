@@ -11,3 +11,11 @@ bool Button::checkState() {
 	_buttonState = digitalRead(_pin);
 	return _buttonState;
 }
+
+void Button::setStateHigh() {
+  _buttonState = HIGH;
+}
+
+void Button::setStateLow() {
+  _buttonState = LOW;
+}
