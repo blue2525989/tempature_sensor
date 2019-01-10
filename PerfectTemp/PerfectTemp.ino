@@ -1,6 +1,6 @@
-#include "button.h"
-#include "led.h"
-#include "lm35.h"
+#include "Button.h"
+#include "Led.h"
+#include "Lm35.h"
 
 int main ()
   {
@@ -9,17 +9,17 @@ int main ()
     Serial.begin(9600);
     
     // lm35 sensor
-    lm35* lm = new lm35(A0);
+    Lm35* lm = new Lm35(A0);
     
     // led
-    led* l = new led(9, 10, 11);
+    Led* l = new Led(9, 10, 11);
     
     // warmer button
-    button* warmerButton = new button(3);   
+    Button* warmerButton = new Button(3);
     // perfect temp button
-    button* perfButton = new button(5);
+    Button* perfButton = new Button(5);
     // cooler button
-    button* coolerButton = new button(6);
+    Button* coolerButton = new Button(6);
     
     // start with green to show successful turn on
     l->changeColor(0, 5, 0);
@@ -33,7 +33,7 @@ int main ()
     }
   } 
 
-void checkCurrentState(button* warmerButton, button* perfButton, button* coolerButton, lm35* lm35) {
+void checkCurrentState(Button* warmerButton, Button* perfButton, Button* coolerButton, Lm35* lm35) {
    if (warmerButton->checkState() == HIGH) {
     lm35->increase();
     Serial.println(lm35->getPerfTemp());
@@ -46,11 +46,13 @@ void checkCurrentState(button* warmerButton, button* perfButton, button* coolerB
    }
 }
 
-void checkCurrentTemp(float current, float perfect, led* led) {
+void checkCurrentTemp(float current, float perfect, Led* led) {
+  float perfectMinus = perfect - 1.5;
+  float perfectIncrease = perfect + 1.5;
   //todo come up with a utility function to make wider range of colors based upon difference from prefTemp
-  if (current > perfect) {
+  if (current > perfectMinus || current > perfectIncrease) {
     led->changeColor(50, 0, 0);
-  } else if (current < perfect) {
+  } else if (current < perfectMinus || current < perfectIncrease) {
     led->changeColor(0, 0, 50);
   } else {
     led->changeColor(0, 50, 0);

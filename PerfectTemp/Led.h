@@ -2,12 +2,12 @@
 #define led_h
 
 #include "Arduino.h"
-#include "led.h"
+#include "Led.h"
 
-class led
+class Led
 {
   public:
-  	led(int redLed, int greenLed, int blueLed);
+	Led(int redLed, int greenLed, int blueLed);
   	void changeColor(int redLed, int greenLed, int blueLed);
 
   private:

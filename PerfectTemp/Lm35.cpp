@@ -1,43 +1,42 @@
 #include "Arduino.h"
-#include "lm35.h"
+#include "Lm35.h"
 
-lm35::lm35(int pin) {
+Lm35::Lm35(int pin) {
   _pin = pin;
 	_prefTemp = 72;
 	pinMode(_pin, INPUT);
 }
 
-float lm35::readTemp() {
-	// todo read the temp!
+float Lm35::readTemp() {
   _temp = analogRead(_pin);
   return _temp;
 }
 
-void lm35::setPerfTemp(float newTemp) {
+void Lm35::setPerfTemp(float newTemp) {
 	_prefTemp = newTemp;
 }
 
-float lm35::getTemp() {
+float Lm35::getTemp() {
   return _temp;
 }
 
-float lm35::getPerfTemp() {
+float Lm35::getPerfTemp() {
   return _prefTemp;
 }
 
-void lm35::increase() {
+void Lm35::increase() {
   _prefTemp += 1;
 }
 
-void lm35::decrease() {
+void Lm35::decrease() {
   _prefTemp -= 1;
 }
 
-void lm35::resetPrefTemp() {
+void Lm35::resetPrefTemp() {
   _prefTemp = 72;
 }
 
-float lm35::getTempF() {
+float Lm35::getTempF() {
    readTemp();
    float val = getTemp();
    float cel = (5.0 * val * 100.0)/1024.0;

@@ -2,12 +2,12 @@
 #define lm35_h
 
 #include "Arduino.h"
-#include "lm35.h"
+#include "Lm35.h"
 
-class lm35
+class Lm35
 {
   public:
-  	lm35(int pin);
+	Lm35(int pin);
   	float readTemp();
   	void increase();
   	void decrease();
